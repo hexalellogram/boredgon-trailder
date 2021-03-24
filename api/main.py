@@ -121,7 +121,7 @@ def add_user():
         entity = db.collection('oregon_users').document(content['username'])
         trail_entity = db.collection('oregon_trail').document(content['username'])
         del content['username']
-        content['password'] = None
+        content['password'] = content.get('password', None)
         entity.set(content)
         trail_entity.set({'q1': 0})
         
