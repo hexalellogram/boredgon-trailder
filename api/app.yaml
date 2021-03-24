@@ -4,7 +4,7 @@ service: api
 instance_class: F2
 
 env_variables:
-  BUCKET_NAME: "example-gcs-bucket"
+  GOOGLE_APPLICATION_CREDENTIALS: "la-hacks-gamers-firebase-adminsdk-bm7jf-211c6a0f92.json"
 
 handlers:
 # Matches requests to /images/... to files in static/images/...
