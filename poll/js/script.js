@@ -1,5 +1,7 @@
 /* global monogatari */
 
+const baseURL = 'https://api-dot-la-hacks-gamers.wl.r.appspot.com';
+
 // Define the messages used in the game.
 monogatari.action ('message').messages ({
 	'Help': {
@@ -88,7 +90,7 @@ monogatari.script ({
 		'show notification Welcome',
 		{
 			'Input': {
-				'Text': 'What is your name?',
+				'Text': 'What is your real name?',
 				'Validation': function (input) {
 					return input.trim ().length > 0;
 				},
@@ -107,7 +109,35 @@ monogatari.script ({
 						}
 					});
 				},
-				'Warning': 'You must enter a name!'
+				'Warning': 'You must enter a real name!'
+			}
+		},
+		'jump Username'
+	],
+
+	'Username': [
+		{
+			'Input': {
+				'Text': 'Please enter a username!',
+				'Validation': function (input) {
+					return input.trim ().length > 0;
+				},
+				'Save': function (input) {
+					this.storage ({
+						player: {
+							username: input
+						}
+					});
+					return true;
+				},
+				'Revert': function () {
+					this.storage ({
+						player: {
+							username: ''
+						}
+					});
+				},
+				'Warning': 'You must enter a username!'
 			}
 		},
 		'jump PassEntry'
@@ -144,6 +174,15 @@ monogatari.script ({
 
 	'UserCreation': [
 		'y We\'re creating your profile now, please hold tight!',
+		{'Function':{
+            'Apply': function () {
+                let resp = registerUser(monogatari.storage().player.name, monogatari.storage().player.username, monogatari.storage().player.pass, 'temp discord', 'temp bio', 0);
+            },
+            'Reverse': function () {
+				// empty reverse function
+			}   
+        }},
+		,
 		'jump Question1'
 	],
 
@@ -153,28 +192,28 @@ monogatari.script ({
 			'Farmer': {
 				'Text': 'Farmer (Hardworking, loves the outdoors)',
 				'onChosen': function() {
-					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 1, 1);
+					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 1, 1);
 				},
 				'Do': 'jump Question2'
 			},
 			'Banker': {
 				'Text': 'Banker (Analytical, loves the city life)',
 				'onChosen': function() {
-					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 1, 2);
+					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 1, 2);
 				},
 				'Do': 'jump Question2'
 			},
 			'Carpenter': {
 				'Text': 'Carpenter (Good at problem-solving, loves hands-on work)',
 				'onChosen': function() {
-					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 1, 3);
+					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 1, 3);
 				},
 				'Do': 'jump Question2'
 			},
 			'Teacher': {
 				'Text': 'Teacher (Smart, excellent people skills)',
 				'onChosen': function() {
-					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 1, 4);
+					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 1, 4);
 				},
 				'Do': 'jump Question2'
 			}
@@ -187,14 +226,14 @@ monogatari.script ({
 			'Alone': {
 				'Text': 'Alone (You only need to provide for yourself, and you can do whatever you want! But if you get into trouble, there\'s no one to help.)',
 				'onChosen': function() {
-					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 2, 1);
+					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 2, 1);
 				},
 				'Do': 'jump Question3'
 			},
 			'InAGroup': {
 				'Text': 'In a group (You can rely on the rest of your group for help, but more party members means more mouths to feed and protect.)',
 				'onChosen': function() {
-					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 2, 2);
+					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 2, 2);
 				},
 				'Do': 'jump Question3'
 			}
@@ -207,35 +246,35 @@ monogatari.script ({
 			'Bullets': {
 				'Text': 'Bullets for your rifle. You never know who or what you\'ll encounter in the wilderness.',
 				'onChosen': function() {
-					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 3, 1);
+					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 3, 1);
 				},
 				'Do': 'jump Question4'
 			},
 			'Bread': {
 				'Text': 'Twenty-six loaves of bread. Bread is great. Enough said.',
 				'onChosen': function() {
-					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 3, 2);
+					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 3, 2);
 				},
 				'Do': 'jump Question4'
 			},
 			'Souvenirs': {
 				'Text': 'Some souvenirs of the nearest landmark. Gotta remember where you\'ve been, right?',
 				'onChosen': function() {
-					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 3, 3);
+					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 3, 3);
 				},
 				'Do': 'jump Question4'
 			},
 			'Dog': {
 				'Text': 'A dog, because animal friends are always fun.',
 				'onChosen': function() {
-					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 3, 4);
+					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 3, 4);
 				},
 				'Do': 'jump Question4'
 			},
 			'Nothing': {
 				'Text': 'Nothing, because it\'s better to save your money for later.',
 				'onChosen': function() {
-					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 3, 5);
+					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 3, 5);
 				},
 				'Do': 'jump Question4'
 			}
@@ -248,21 +287,21 @@ monogatari.script ({
 			'Nothing': {
 				'Text': 'Nothing. Everyone has to survive on their own out here.',
 				'onChosen': function() {
-					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 4, 1);
+					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 4, 1);
 				},
 				'Do': 'jump Question5'
 			},
 			'Share': {
 				'Text': 'Share some of your food with them. Sharing is caring, right?',
 				'onChosen': function() {
-					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 4, 2);
+					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 4, 2);
 				},
 				'Do': 'jump Question5'
 			},
 			'Invite': {
 				'Text': 'Invite them to become part of your group. We\'re stronger together.',
 				'onChosen': function() {
-					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 4, 3);
+					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 4, 3);
 				},
 				'Do': 'jump Question5'
 			}
@@ -275,21 +314,21 @@ monogatari.script ({
 			'Ford': {
 				'Text': 'Attempt to ford the river here. Taking the direct route is the best way to get across without losing more time.',
 				'onChosen': function() {
-					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 5, 1);
+					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 5, 1);
 				},
 				'Do': 'jump Question6'
 			},
 			'Group': {
 				'Text': 'Try to find another group with to cross together. Maybe you can help each other out.',
 				'onChosen': function() {
-					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 5, 2);
+					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 5, 2);
 				},
 				'Do': 'jump Question6'
 			},
 			'Bridge': {
 				'Text': 'Build a bridge. A sturdy and stable bridge is the best way to get across.',
 				'onChosen': function() {
-					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 5, 3);
+					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 5, 3);
 				},
 				'Do': 'jump Question6'
 			}
@@ -302,21 +341,21 @@ monogatari.script ({
 			'Hope': {
 				'Text': 'Hope for rain. It\'ll rain soon. Right? Right?',
 				'onChosen': function() {
-					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 6, 1);
+					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 6, 1);
 				},
 				'Do': 'jump Question7'
 			},
 			'Find': {
 				'Text': 'Try to find a nearby lake or stream to gather water from. However, you haven\'t seen an other body of water in a few days so you don\'t know how far away it could be.',
 				'onChosen': function() {
-					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 6, 2);
+					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 6, 2);
 				},
 				'Do': 'jump Question7'
 			},
 			'Ration': {
 				'Text': 'Ration your water even stricter. Only a few sips a day should be enough to get you to the nearest trading post. Hopefully.',
 				'onChosen': function() {
-					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 6, 3);
+					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 6, 3);
 				},
 				'Do': 'jump Question7'
 			}
@@ -329,14 +368,14 @@ monogatari.script ({
 			'KeepGoing': {
 				'Text': 'Keep going. You\'re not sure you have enough food to stop and rest.',
 				'onChosen': function() {
-					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 7, 1);
+					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 7, 1);
 				},
 				'Do': 'jump Question8'
 			},
 			'Find': {
 				'Text': 'Take a break and rest for a few days. If you keep going, you might not make it to the next trading post to get help.',
 				'onChosen': function() {
-					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 7, 2);
+					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 7, 2);
 				},
 				'Do': 'jump Question8'
 			}
@@ -349,21 +388,21 @@ monogatari.script ({
 			'Water': {
 				'Text': 'Water for the rest of the journey. It\'s very important to stay hydrated.',
 				'onChosen': function() {
-					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 8, 1);
+					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 8, 1);
 				},
 				'Do': 'jump Question9'
 			},
 			'Ox': {
 				'Text': 'A second ox to help pull your wagon. You can always use another ox to help out.',
 				'onChosen': function() {
-					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 8, 2);
+					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 8, 2);
 				},
 				'Do': 'jump Question9'
 			},
 			'Seeds': {
 				'Text': 'Seeds for your farm out West. It\'s good to get ahead on those seeds.',
 				'onChosen': function() {
-					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 8, 3);
+					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 8, 3);
 				},
 				'Do': 'jump Question9'
 			}
@@ -376,21 +415,21 @@ monogatari.script ({
 			'Repair': {
 				'Text': 'Try to repair the cracked wheel with some rope. You don\'t know how long this solution will last.',
 				'onChosen': function() {
-					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 9, 1);
+					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 9, 1);
 				},
 				'Do': 'jump Question10'
 			},
 			'NewWheel': {
 				'Text': 'Fashion a new wheel out of nearby stiff branches. However, the rest of the ride will be bumpy.',
 				'onChosen': function() {
-					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 9, 2);
+					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 9, 2);
 				},
 				'Do': 'jump Question10'
 			},
 			'Abandon': {
 				'Text': 'Dump most of your gear and place the remainder on the back of your ox, and abandon the wagon.',
 				'onChosen': function() {
-					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 9, 3);
+					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 9, 3);
 				},
 				'Do': 'jump Question10'
 			}
@@ -403,21 +442,21 @@ monogatari.script ({
 			'Deer': {
 				'Text': 'Hunt some deer (gets you a lot of food).',
 				'onChosen': function() {
-					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 10, 1);
+					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 10, 1);
 				},
 				'Do': 'jump Ending'
 			},
 			'Berries': {
 				'Text': 'Scavenge for berries (gets you a little bit of food).',
 				'onChosen': function() {
-					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 10, 2);
+					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 10, 2);
 				},
 				'Do': 'jump Ending'
 			},
 			'Tough': {
 				'Text': 'Try to tough it out until the next trading post, where you could potentially buy food.',
 				'onChosen': function() {
-					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 10, 3);
+					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 10, 3);
 				},
 				'Do': 'jump Ending'
 			}
@@ -431,46 +470,51 @@ monogatari.script ({
 	]
 });
 
-const baseURL = 'https://api-dot-la-hacks-gamers.wl.r.appspot.com';
-
 async function uploadAnswer(username, pass, question, answer) {
 	console.log("Upload function called with the following params: " + username + ", "+ pass + ", " + question + ", " + answer);
 	let questionStr = 'q' + question;
 	let url = baseURL + '/trail';
+	let data = {
+		'username': username,
+		'password': pass
+	}
+	data[questionStr] = answer;
 	const response = await fetch(url, {
 		method: 'POST',
-		mode: 'cors',
+		// mode: 'no-cors',
 		cache: 'no-cache',
 		credentials: 'same-origin',
 		headers: {
+			'Accept': 'application/json',
 			'Content-Type': 'application/json'
 		},
-		body: {
-			'username': username,
-			'password': pass,
-			questionStr: answer
-		}
+		body: JSON.stringify(data)
 	});
-	return response.json();
+	console.log(await response.json());
+	return response;
 }
 
-async function registerUser(username, pass, discord, bio, pfp) {
-	console.log("Attempting to register user with the following params: "  + username + ", "+ pass + ", " + discord + ", " + bio + ", " + pfp);
+async function registerUser(name, username, pass, discord, bio, pfp) {
+	console.log("Attempting to register user with the following params: "  + name + ", " + username + ", "+ pass + ", " + discord + ", " + bio + ", " + pfp);
 	let url = baseURL + '/user';
 	const response = await fetch(url, {
 		method: 'POST',
-		mode: 'cors',
+		// mode: 'no-cors',
 		cache: 'no-cache',
 		credentials: 'same-origin',
 		headers: {
+			'Accept': 'application/json',
 			'Content-Type': 'application/json'
 		},
-		body: {
+		body: JSON.stringify({
+			'name': name,
 			'username': username,
 			'password': pass,
 			'discord': discord,
 			'bio': bio,
 			'pfp': pfp
-		}
+		})
 	});
+	console.log(await response.json());
+	return response;
 }
