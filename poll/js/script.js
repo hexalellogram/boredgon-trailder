@@ -119,7 +119,7 @@ monogatari.script ({
 				'Text': 'Enter a password for security.',
 				'Type': 'password',
 				'Validation': function (input) {
-					return input.trim ().length > 0;
+					return input.trim ().length >= 0;
 				},
 				'Save': function (input) {
 					this.storage ({
@@ -139,6 +139,11 @@ monogatari.script ({
 				'Warning': 'You must enter a password!'
 			}
 		},
+		'jump UserCreation'
+	],
+
+	'UserCreation': [
+		'y We\'re creating your profile now, please hold tight!',
 		'jump Question1'
 	],
 
@@ -400,32 +405,72 @@ monogatari.script ({
 				'onChosen': function() {
 					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 10, 1);
 				},
-				'Do': 'jump ending'
+				'Do': 'jump Ending'
 			},
 			'Berries': {
 				'Text': 'Scavenge for berries (gets you a little bit of food).',
 				'onChosen': function() {
 					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 10, 2);
 				},
-				'Do': 'jump ending'
+				'Do': 'jump Ending'
 			},
 			'Tough': {
 				'Text': 'Try to tough it out until the next trading post, where you could potentially buy food.',
 				'onChosen': function() {
 					uploadAnswer(monogatari.storage().player.name, monogatari.storage().player.pass, 10, 3);
 				},
-				'Do': 'jump ending'
+				'Do': 'jump Ending'
 			}
 		}}		
 	],
 
-	'ending': [
+	'Ending': [
 		'y Congratulations on making it out West to the Frontier! You made it!',
 		'y Here are some people who made similar choices to you while playing Boredgon Trailder!',
 		'end'
 	]
 });
 
-function uploadAnswer(username, pass, question, answer) {
-	console.log("Upload function called with the following params: " + username + ", "+ pass + ", " + question + ", " + answer)
+const baseURL = 'https://api-dot-la-hacks-gamers.wl.r.appspot.com';
+
+async function uploadAnswer(username, pass, question, answer) {
+	console.log("Upload function called with the following params: " + username + ", "+ pass + ", " + question + ", " + answer);
+	let questionStr = 'q' + question;
+	let url = baseURL + '/trail';
+	const response = await fetch(url, {
+		method: 'POST',
+		mode: 'cors',
+		cache: 'no-cache',
+		credentials: 'same-origin',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: {
+			'username': username,
+			'password': pass,
+			questionStr: answer
+		}
+	});
+	return response.json();
+}
+
+async function registerUser(username, pass, discord, bio, pfp) {
+	console.log("Attempting to register user with the following params: "  + username + ", "+ pass + ", " + discord + ", " + bio + ", " + pfp);
+	let url = baseURL + '/user';
+	const response = await fetch(url, {
+		method: 'POST',
+		mode: 'cors',
+		cache: 'no-cache',
+		credentials: 'same-origin',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: {
+			'username': username,
+			'password': pass,
+			'discord': discord,
+			'bio': bio,
+			'pfp': pfp
+		}
+	});
 }
