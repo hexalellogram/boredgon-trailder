@@ -2,7 +2,7 @@
 
 1. Choose your starting character based on you!:
     1. Farmer (Hardworking, loves the outdoors)
-    2. Banker (Analytical, city dweller)
+    2. Banker (Analytical, loves the city life)
     3. Carpenter (Good at problem-solving, loves hands-on work)
     4. Teacher (Smart, excellent people skills)
 2. Do you want to travel to the Frontier alone or in a group?
