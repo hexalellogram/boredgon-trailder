@@ -87,7 +87,7 @@ def trail():
     if i == 0:
         return jsonify({"error": "No question specified"}), 400
 
-    if content['q' + str(i)] > 3 or content['q' + str(i)] < -1:
+    if content['q' + str(i)] > 5 or content['q' + str(i)] < -1:
         return jsonify({"error": "Invalid value for POSTed key(s)"}), 400
 
     for j in range(i+1, 11):
