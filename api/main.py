@@ -1,9 +1,12 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from google.cloud import firestore
+from hashlib import sha256
 
 db = firestore.Client()
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/')
 def hello_world():
@@ -57,11 +60,19 @@ def trail():
 
     username = content['username']
     user_trail = db.collection('oregon_users').document(username)
-    if not user_trail.get().exists:
+    user_trail_doc = user_trail.get()
+    if not user_trail_doc.exists:
         # verify username exists
-        return jsonify({"error": "The username can't be found"}), 400
+        return jsonify({"error": "The username or password is incorrect"}), 400
+    
+    if 'password' not in content:
+        return jsonify({"error": "Missing password"}), 400
 
-    if len(content) != 2:
+    hashedPw = sha256(content['password'].encode('utf-8')).hexdigest()
+    if hashedPw != user_trail_doc.to_dict()['password']:
+        return jsonify({"error": "The username or password is incorrect"}), 400
+
+    if len(content) != 3:
         return jsonify({"error": "Invalid JSON data"}), 400
 
     clean_dict = dict()
@@ -121,7 +132,12 @@ def add_user():
         entity = db.collection('oregon_users').document(content['username'])
         trail_entity = db.collection('oregon_trail').document(content['username'])
         del content['username']
-        content['password'] = content.get('password', None)
+        raw_pass = content.get('password', None)
+        hashedPw = None
+        if raw_pass:
+            hashedPw = sha256(raw_pass.encode('utf-8')).hexdigest()
+            
+        content['password'] = hashedPw
         entity.set(content)
         trail_entity.set({'q1': 0})
         
