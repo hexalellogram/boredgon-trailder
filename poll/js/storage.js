@@ -4,6 +4,7 @@
 monogatari.storage ({
 	player: {
 		name: '',
-		pass: ''
+		pass: '',
+		new: true
 	}
 });

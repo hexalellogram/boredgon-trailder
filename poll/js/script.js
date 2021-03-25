@@ -88,6 +88,52 @@ monogatari.script ({
 	'Start': [
 		'show scene #f7f6f6 with fadeIn',
 		'show notification Welcome',
+		{ 'Input': {
+			'Text': 'Are you a new or returning user?',
+			'Type': 'radio',
+			'Options': [
+				{
+					label: 'New User',
+					value: 'new'
+				},
+				{
+					label: 'Returning User',
+					value: 'returning'
+				}
+			],
+			'Save': (input) => {
+				if (input == 'new') {
+					monogatari.storage ({
+						player: {
+							new: true
+						}
+					});
+					console.log('new player');
+				}
+				else {
+					monogatari.storage ({
+						player: {
+							new: false
+						}
+					});
+					console.log('returning player');
+				}
+			},
+		}},
+		'jump NewUserCheck'
+	],
+
+	'NewUserCheck': [
+		{'Conditional': {
+			'Condition': function() {
+				return monogatari.storage('player').new;
+			},
+			'True': 'jump RealName',
+			'False': 'jump Username'
+		}}
+	],
+
+	'RealName': [
 		{
 			'Input': {
 				'Text': 'What is your real name?',
@@ -169,7 +215,13 @@ monogatari.script ({
 				'Warning': 'You must enter a password!'
 			}
 		},
-		'jump UserCreation'
+		{'Conditional': {
+			'Condition': function() {
+				return monogatari.storage('player').new;
+			},
+			'True': 'jump UserCreation',
+			'False': 'jump WelcomeBack'
+		}}
 	],
 
 	'UserCreation': [
@@ -183,6 +235,11 @@ monogatari.script ({
 			}   
         }},
 		,
+		'jump Question1'
+	],
+
+	'WelcomeBack': [
+		'y Welcome back!',
 		'jump Question1'
 	],
 
