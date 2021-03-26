@@ -1,7 +1,7 @@
 // used in post requests
 const baseURL = 'https://api-dot-la-hacks-gamers.wl.r.appspot.com';
 // used if the user already exists
-const jumpTo = 'jump ';
+const jumpTo = 'q1';
 
 /* global monogatari */
 
@@ -326,7 +326,7 @@ monogatari.script ({
 
 	// TODO add login functionality here
 	'Login': [
-		'y Welcome back! Logging you in now',
+		'y Welcome back! Click to log in now.',
 		{'Function':{
             'Apply': async function () {
 				let resp = await loginUser(monogatari.storage().player.username, 
@@ -334,6 +334,7 @@ monogatari.script ({
 				// console.log('Response in UserCreation');
 				// let awaitedResp = await resp.json();
 				// console.log(awaitedResp);
+				console.log('Status: ' + resp.status);
 				monogatari.storage().loginResponseStatus = resp.status;
             },
             'Reverse': function () {
@@ -351,7 +352,23 @@ monogatari.script ({
 
 	// TODO: im sorry this conditional is so bad
 	'DetermineQuestion': [
-
+		{'Conditional': {
+			'Condition': function() {
+				return jumpTo;
+			},
+			'q1': 'jump Question1',
+			'q2': 'jump Question2',
+			'q3': 'jump Question3',
+			'q4': 'jump Question1',
+			'q5': 'jump Question5',
+			'q6': 'jump Question6',
+			'q7': 'jump Question7',
+			'q8': 'jump Question8',
+			'q9': 'jump Question9',
+			'q10': 'jump Question10',
+			'Ending': 'jump Ending'
+		}},
+		'jump Question1' // escape hatch for the first question
 	],
 
 	'LoginFailed': [
@@ -440,7 +457,7 @@ async function loginUser(username, pass) {
 
 	let awaitedResponse = await response.json();
 	console.log(awaitedResponse);
-	jumpTo = jumpTo + awaitedResponse.question;
+	jumpTo = awaitedResponse.question;
 	console.log("Command to be issued: " + jumpTo);
 	return response;
 }
