@@ -1,7 +1,7 @@
 // used in post requests
 const baseURL = 'https://api-dot-la-hacks-gamers.wl.r.appspot.com';
 // used if the user already exists
-const jumpTo = 'q1';
+let jumpTo = 'q1';
 
 /* global monogatari */
 
