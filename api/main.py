@@ -135,7 +135,7 @@ def add_user():
                             if doc_dict['q' + str(j)] == -1:
                                 return jsonify({"message": "Logged in", "question": 'Ending'}), 200
                             elif doc_dict['q' + str(j)] == 0:
-                                return jsonify({"message": "Logged in", "question": 'q' + j}), 200
+                                return jsonify({"message": "Logged in", "question": 'q' + str(j)}), 200
                             
                             if j == 10:
                                 return jsonify({"message": "Logged in", "question": 'Ending'}), 200
