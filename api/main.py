@@ -23,7 +23,6 @@ def match(username):
     trail_coll = db.collection('oregon_trail')
 
     matches = trail_coll.where(
-            "q1", '==', trail_dict['q1']).where(
             "q2", '==', trail_dict['q2']).where(
             "q3", '==', trail_dict['q3']).where(
             "q4", '==', trail_dict['q4']).where(
@@ -45,7 +44,13 @@ def match(username):
         if match_username == username:
             continue
         match_dict = db.collection('oregon_users').document(match_username).get().to_dict()
-        name_discord.append({match_dict['name']: match_dict['discord']})
+        bio = match_dict['bio']
+        if len(bio) > 500:
+            bio = bio[0:500] + "..."
+        pfp = match.to_dict()['q1']
+        if pfp > 4 or pfp < 0:
+            pfp = 0
+        name_discord.append({match_dict['name']: [match_dict['discord'], bio, "image/" + str(pfp) + ".jpg"]})
 
     return jsonify({"users": name_discord}), 200
 
