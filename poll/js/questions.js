@@ -1,3 +1,5 @@
+const DYSENTERY_THRESHOLD = 0.5; // should be between 0 and 1
+
 monogatari.script ({
     'Question1': [
 		'y Choose your starting character based on you!',
@@ -34,6 +36,14 @@ monogatari.script ({
 	],
 
 	'Question2': [
+		{'Conditional': {
+			'Condition': function() { // dysentery check
+				const randomNum = Math.random();
+				console.log('Dysentery roll: ' + randomNum)
+				return randomNum > DYSENTERY_THRESHOLD;
+			},
+			'False': 'jump DysenteryEnding'
+		}},
 		'y Do you want to travel to the Frontier alone or in a group?',
 		{ 'Choice': {
 			'Alone': {
@@ -54,6 +64,14 @@ monogatari.script ({
 	],
 
 	'Question3': [
+		{'Conditional': {
+			'Condition': function() { // dysentery check
+				const randomNum = Math.random();
+				console.log('Dysentery roll: ' + randomNum)
+				return randomNum > DYSENTERY_THRESHOLD;
+			},
+			'False': 'jump DysenteryEnding'
+		}},
 		'y You start your journey to the Frontier. What do you buy at the first trading post?',
 		{ 'Choice': {
 			'Bullets': {
@@ -95,6 +113,14 @@ monogatari.script ({
 	],
 
 	'Question4': [
+		{'Conditional': {
+			'Condition': function() { // dysentery check
+				const randomNum = Math.random();
+				console.log('Dysentery roll: ' + randomNum)
+				return randomNum > DYSENTERY_THRESHOLD;
+			},
+			'False': 'jump DysenteryEnding'
+		}},
 		'y You encounter another group of travelers on the trail. They seem to be running low on supplies. What do you do?',
 		{ 'Choice': {
 			'Nothing': {
@@ -122,6 +148,14 @@ monogatari.script ({
 	],
 
 	'Question5': [
+		{'Conditional': {
+			'Condition': function() { // dysentery check
+				const randomNum = Math.random();
+				console.log('Dysentery roll: ' + randomNum)
+				return randomNum > DYSENTERY_THRESHOLD;
+			},
+			'False': 'jump DysenteryEnding'
+		}},
 		'y On your journey, you come across the Snake River. You have to cross it, somehow, but it seems a bit deep. What do you do?',
 		{ 'Choice': {
 			'Ford': {
@@ -149,6 +183,14 @@ monogatari.script ({
 	],
 
 	'Question6': [
+		{'Conditional': {
+			'Condition': function() { // dysentery check
+				const randomNum = Math.random();
+				console.log('Dysentery roll: ' + randomNum)
+				return randomNum > DYSENTERY_THRESHOLD;
+			},
+			'False': 'jump DysenteryEnding'
+		}},
 		'y You are running low on water supplies after one of the barrels cracked and spilled all the water. What do you do?',
 		{ 'Choice': {
 			'Hope': {
@@ -176,6 +218,14 @@ monogatari.script ({
 	],
 
 	'Question7': [
+		{'Conditional': {
+			'Condition': function() { // dysentery check
+				const randomNum = Math.random();
+				console.log('Dysentery roll: ' + randomNum)
+				return randomNum > DYSENTERY_THRESHOLD;
+			},
+			'False': 'jump DysenteryEnding'
+		}},
 		'y While setting up camp today, you were bitten by a snake! What do you do?',
 		{ 'Choice': {
 			'KeepGoing': {
@@ -196,6 +246,14 @@ monogatari.script ({
 	],
 
 	'Question8': [
+		{'Conditional': {
+			'Condition': function() { // dysentery check
+				const randomNum = Math.random();
+				console.log('Dysentery roll: ' + randomNum)
+				return randomNum > DYSENTERY_THRESHOLD;
+			},
+			'False': 'jump DysenteryEnding'
+		}},
 		'y You\'ve reached another trading post! What do you want to buy today?',
 		{ 'Choice': {
 			'Water': {
@@ -223,6 +281,14 @@ monogatari.script ({
 	],
 
 	'Question9': [
+		{'Conditional': {
+			'Condition': function() { // dysentery check
+				const randomNum = Math.random();
+				console.log('Dysentery roll: ' + randomNum)
+				return randomNum > DYSENTERY_THRESHOLD;
+			},
+			'False': 'jump DysenteryEnding'
+		}},
 		'y One of your wagon wheels cracked in half and fell off the wagon. You can\'t move on without it, so what do you do?',
 		{ 'Choice': {
 			'Repair': {
@@ -250,6 +316,14 @@ monogatari.script ({
 	],
 
 	'Question10': [
+		{'Conditional': {
+			'Condition': function() { // dysentery check
+				const randomNum = Math.random();
+				console.log('Dysentery roll: ' + randomNum)
+				return randomNum > DYSENTERY_THRESHOLD;
+			},
+			'False': 'jump DysenteryEnding'
+		}},
 		'y You are running low on food after wolves broke into your food supply. What do you do?',
 		{ 'Choice': {
 			'Deer': {
