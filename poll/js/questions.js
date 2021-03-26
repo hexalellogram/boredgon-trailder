@@ -257,28 +257,42 @@ monogatari.script ({
 				'onChosen': function() {
 					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 10, 1);
 				},
-				'Do': 'jump Ending'
+				'Do': 'jump SurvivedEnding'
 			},
 			'Berries': {
 				'Text': 'Scavenge for berries (gets you a little bit of food).',
 				'onChosen': function() {
 					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 10, 2);
 				},
-				'Do': 'jump Ending'
+				'Do': 'jump SurvivedEnding'
 			},
 			'Tough': {
 				'Text': 'Try to tough it out until the next trading post, where you could potentially buy food.',
 				'onChosen': function() {
 					uploadAnswer(monogatari.storage().player.username, monogatari.storage().player.pass, 10, 3);
 				},
-				'Do': 'jump Ending'
+				'Do': 'jump SurvivedEnding'
 			}
 		}}		
 	],
 
-    'Ending': [
+    'SurvivedEnding': [
 		'y Congratulations on making it out West to the Frontier! You made it!',
-		'y Here are some people who made similar choices to you while playing Boredgon Trailder!',
+		'jump Ending'
+	],
+
+	'DysenteryEnding': [
+		'y Unfortunately, you\'ve come down with Dysentery and died.',
+		'jump Ending'
+	],
+
+	'Ending': [
+		'y Here are some people who made similar choices to you while playing Boredgon Trailder! Click to open our matches page.',
+		function() {
+			let urlStr = '../poll/match.html?username=' + monogatari.storage('player').username;
+			console.log('Redirecting to ' + urlStr);
+			window.location.href=urlStr;
+		},
 		'end'
 	]
 });
