@@ -20,14 +20,20 @@ if (urlParams.has('username') /* && urlParams.has('data') */){
                 for (let key in element){
                     var name = key
                 }
-                var discord = element[name]
+                var discord = element[name][0]
+                var bio = element[name][1]
+                var pic = element[name][2]
                 console.log(name)
                 console.log(discord)
                 var row = table.insertRow(-1);
-                var ncell = row.insertCell(0);
-                var dcell = row.insertCell(1);
+                var pcell = row.insertCell(0);
+                var ncell = row.insertCell(1);
+                var dcell = row.insertCell(2);
+                var bcell = row.insertCell(3);
+                pcell.innerHTML = '<image src=' + pic + '></image>'
                 ncell.innerHTML = name
                 dcell.innerHTML = discord
+                bcell.innerHTML = bio
             });
         });
 } else {
