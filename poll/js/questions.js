@@ -39,7 +39,7 @@ monogatari.script ({
 		{'Conditional': {
 			'Condition': function() { // dysentery check
 				const randomNum = Math.random();
-				console.log('Dysentery roll: ' + randomNum)
+				// console.log('Dysentery roll: ' + randomNum)
 				return randomNum > DYSENTERY_THRESHOLD;
 			},
 			'False': 'jump DysenteryEnding'
@@ -67,7 +67,7 @@ monogatari.script ({
 		{'Conditional': {
 			'Condition': function() { // dysentery check
 				const randomNum = Math.random();
-				console.log('Dysentery roll: ' + randomNum)
+				// console.log('Dysentery roll: ' + randomNum)
 				return randomNum > DYSENTERY_THRESHOLD;
 			},
 			'False': 'jump DysenteryEnding'
@@ -116,7 +116,7 @@ monogatari.script ({
 		{'Conditional': {
 			'Condition': function() { // dysentery check
 				const randomNum = Math.random();
-				console.log('Dysentery roll: ' + randomNum)
+				// console.log('Dysentery roll: ' + randomNum)
 				return randomNum > DYSENTERY_THRESHOLD;
 			},
 			'False': 'jump DysenteryEnding'
@@ -151,7 +151,7 @@ monogatari.script ({
 		{'Conditional': {
 			'Condition': function() { // dysentery check
 				const randomNum = Math.random();
-				console.log('Dysentery roll: ' + randomNum)
+				// console.log('Dysentery roll: ' + randomNum)
 				return randomNum > DYSENTERY_THRESHOLD;
 			},
 			'False': 'jump DysenteryEnding'
@@ -186,7 +186,7 @@ monogatari.script ({
 		{'Conditional': {
 			'Condition': function() { // dysentery check
 				const randomNum = Math.random();
-				console.log('Dysentery roll: ' + randomNum)
+				// console.log('Dysentery roll: ' + randomNum)
 				return randomNum > DYSENTERY_THRESHOLD;
 			},
 			'False': 'jump DysenteryEnding'
@@ -221,7 +221,7 @@ monogatari.script ({
 		{'Conditional': {
 			'Condition': function() { // dysentery check
 				const randomNum = Math.random();
-				console.log('Dysentery roll: ' + randomNum)
+				// console.log('Dysentery roll: ' + randomNum)
 				return randomNum > DYSENTERY_THRESHOLD;
 			},
 			'False': 'jump DysenteryEnding'
@@ -249,7 +249,7 @@ monogatari.script ({
 		{'Conditional': {
 			'Condition': function() { // dysentery check
 				const randomNum = Math.random();
-				console.log('Dysentery roll: ' + randomNum)
+				// console.log('Dysentery roll: ' + randomNum)
 				return randomNum > DYSENTERY_THRESHOLD;
 			},
 			'False': 'jump DysenteryEnding'
@@ -284,7 +284,7 @@ monogatari.script ({
 		{'Conditional': {
 			'Condition': function() { // dysentery check
 				const randomNum = Math.random();
-				console.log('Dysentery roll: ' + randomNum)
+				// console.log('Dysentery roll: ' + randomNum)
 				return randomNum > DYSENTERY_THRESHOLD;
 			},
 			'False': 'jump DysenteryEnding'
@@ -319,7 +319,7 @@ monogatari.script ({
 		{'Conditional': {
 			'Condition': function() { // dysentery check
 				const randomNum = Math.random();
-				console.log('Dysentery roll: ' + randomNum)
+				// console.log('Dysentery roll: ' + randomNum)
 				return randomNum > DYSENTERY_THRESHOLD;
 			},
 			'False': 'jump DysenteryEnding'
@@ -364,7 +364,7 @@ monogatari.script ({
 		'y Here are some people who made similar choices to you while playing Boredgon Trailder! Click to open our matches page.',
 		function() {
 			let urlStr = '../poll/match.html?username=' + monogatari.storage('player').username;
-			console.log('Redirecting to ' + urlStr);
+			// console.log('Redirecting to ' + urlStr);
 			window.location.href=urlStr;
 		},
 		'end'

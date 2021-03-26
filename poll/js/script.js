@@ -111,7 +111,7 @@ monogatari.script ({
 							new: true
 						}
 					});
-					console.log('new player');
+					// console.log('new player');
 				}
 				else {
 					monogatari.storage ({
@@ -119,7 +119,7 @@ monogatari.script ({
 							new: false
 						}
 					});
-					console.log('returning player');
+					// console.log('returning player');
 				}
 			},
 		}},
@@ -334,7 +334,7 @@ monogatari.script ({
 				// console.log('Response in UserCreation');
 				// let awaitedResp = await resp.json();
 				// console.log(awaitedResp);
-				console.log('Status: ' + resp.status);
+				// console.log('Status: ' + resp.status);
 				monogatari.storage().loginResponseStatus = resp.status;
             },
             'Reverse': function () {
@@ -404,7 +404,7 @@ monogatari.script ({
 });
 
 async function uploadAnswer(username, pass, question, answer) {
-	console.log("Upload function called with the following params: " + username + ", "+ pass + ", " + question + ", " + answer);
+	// console.log("Upload function called with the following params: " + username + ", "+ pass + ", " + question + ", " + answer);
 	let questionStr = 'q' + question;
 	let url = baseURL + '/trail';
 	let data = {
@@ -423,12 +423,12 @@ async function uploadAnswer(username, pass, question, answer) {
 		},
 		body: JSON.stringify(data)
 	});
-	console.log(await response.json());
+	// console.log(await response.json());
 	return response;
 }
 
 async function registerUser(name, username, pass, discord, bio, pfp) {
-	console.log("Attempting to register user with the following params: "  + name + ", " + username + ", "+ pass + ", " + discord + ", " + bio + ", " + pfp);
+	// console.log("Attempting to register user with the following params: "  + name + ", " + username + ", "+ pass + ", " + discord + ", " + bio + ", " + pfp);
 	let url = baseURL + '/user';
 	const response = await fetch(url, {
 		method: 'POST',
@@ -453,7 +453,7 @@ async function registerUser(name, username, pass, discord, bio, pfp) {
 }
 
 async function loginUser(username, pass) {
-	console.log("Attempting to login user with the following params: " + username + ", "+ pass);
+	// console.log("Attempting to login user with the following params: " + username + ", "+ pass);
 	let url = baseURL + '/user';
 	const response = await fetch(url, {
 		method: 'POST',
@@ -471,8 +471,8 @@ async function loginUser(username, pass) {
 	});
 
 	let awaitedResponse = await response.json();
-	console.log(awaitedResponse);
+	// console.log(awaitedResponse);
 	jumpTo = awaitedResponse.question;
-	console.log("Command to be issued: " + jumpTo);
+	// console.log("Command to be issued: " + jumpTo);
 	return response;
 }
