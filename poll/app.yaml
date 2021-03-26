@@ -13,7 +13,7 @@ handlers:
 - url: /robots.txt
   static_files: robots.txt
   upload: robots.txt
-- url: /match.html
+- url: /poll/match.html
   static_files: match.html
   upload: match.html
 - url: /image
