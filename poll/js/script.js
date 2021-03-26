@@ -1,7 +1,7 @@
 // used in post requests
 const baseURL = 'https://api-dot-la-hacks-gamers.wl.r.appspot.com';
 // used if the user already exists
-const jumpTo = 'q1';
+const jumpTo = 'jump ';
 
 /* global monogatari */
 
@@ -327,7 +327,45 @@ monogatari.script ({
 	// TODO add login functionality here
 	'Login': [
 		'y Welcome back! Logging you in now',
-		'jump Question1'
+		{'Function':{
+            'Apply': async function () {
+				let resp = await loginUser(monogatari.storage().player.username, 
+					monogatari.storage().player.pass);
+				// console.log('Response in UserCreation');
+				// let awaitedResp = await resp.json();
+				// console.log(awaitedResp);
+				monogatari.storage().loginResponseStatus = resp.status;
+            },
+            'Reverse': function () {
+				// empty reverse function, logging in cannot be undone
+			}   
+        }},
+		{'Conditional': {
+			'Condition': function() { // check if the response was successful
+				return monogatari.storage('loginResponseStatus') == 200;
+			},
+			'True': 'jump DetermineQuestion', // success, start on the questions
+			'False': 'jump LoginFailed'
+		}}
+	],
+
+	// TODO: im sorry this conditional is so bad
+	'DetermineQuestion': [
+
+	],
+
+	'LoginFailed': [
+		'y Sorry, you entered an incorrect username and/or password. Please try again!',
+		{'Function': {
+			'Apply': function () {
+				monogatari.storage('player').username = '';
+				monogatari.storage('player').pass = '';
+			},
+			'Reverse': function() {
+				// empty reverse function because this is just to wipe the username and password
+			}
+		}},
+		'jump Username'
 	],
 	
 	// all questions are now contained in questions.js
@@ -399,6 +437,10 @@ async function loginUser(username, pass) {
 			'password': pass
 		})
 	});
-	// console.log(await response.json());
+
+	let awaitedResponse = await response.json();
+	console.log(awaitedResponse);
+	jumpTo = jumpTo + awaitedResponse.question;
+	console.log("Command to be issued: " + jumpTo);
 	return response;
 }

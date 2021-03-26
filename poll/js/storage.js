@@ -10,5 +10,7 @@ monogatari.storage ({
 		bio: '',
 		new: true
 	},
-	userCreationResponse: 0
+	userCreationResponseStatus: 0,
+	loginResponseStatus: 0,
+	questionToResumeAt: 'jump q1'
 });
