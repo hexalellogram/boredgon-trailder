@@ -350,7 +350,7 @@ monogatari.script ({
 		}}
 	],
 
-	// TODO: im sorry this conditional is so bad
+	// I'm sorry this conditional is so bad
 	'DetermineQuestion': [
 		{'Conditional': {
 			'Condition': function() {
@@ -366,7 +366,7 @@ monogatari.script ({
 			'q8': 'jump Question8',
 			'q9': 'jump Question9',
 			'q10': 'jump Question10',
-			'Ending': 'jump Ending'
+			'Ending': 'jump LoginEnding'
 		}},
 		'jump Question1' // escape hatch for the first question
 	],
@@ -383,6 +383,21 @@ monogatari.script ({
 			}
 		}},
 		'jump Username'
+	],
+
+	'LoginEnding': [
+		'y We noticed you already completed Boredgon Trailder. Would you like to play again or view your matches?',
+		{'Choice': {
+			'Play': {
+				'Text': 'Play Again',
+				'Do': 'jump Question1'
+			},
+			'View': {
+				'Text': 'View Matches',
+				'Do': 'jump Ending'
+			}
+		}},
+		'jump Ending' // escape hatch to jump to ending (shouldn't get here but regardless)
 	],
 	
 	// all questions are now contained in questions.js
