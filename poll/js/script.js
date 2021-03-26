@@ -19,11 +19,11 @@ monogatari.action ('message').messages ({
 
 // Define the notifications used in the game
 monogatari.action ('notification').notifications ({
-	'Welcome': {
-		title: 'Welcome',
-		body: 'This is the Monogatari VN Engine',
-		icon: ''
-	}
+	// 'Welcome': {
+	// 	title: 'Welcome',
+	// 	body: 'This is the Monogatari VN Engine',
+	// 	icon: ''
+	// }
 });
 
 // Define the Particles JS Configurations used in the game
