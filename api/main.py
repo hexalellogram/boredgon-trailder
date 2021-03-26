@@ -91,7 +91,7 @@ def trail():
         return jsonify({"error": "Invalid value for POSTed key(s)"}), 400
 
     for j in range(i+1, 11):
-        clean_dict['q' + str(j)] = -1
+        clean_dict['q' + str(j)] = 0
     
     clean_dict['q' + str(i)] = content['q' + str(i)]
 
@@ -116,6 +116,31 @@ def add_user():
     content = request.get_json()
     if content is None:
         return jsonify({"error": "Please POST a valid JSON with the correct content type"}), 400
+    if len(content) == 2:
+        if ('username' in content and "password" in content):
+            # Handle login
+            entity = db.collection('oregon_users').document(content['username'])
+            entity_obj = entity.get()
+            if entity_obj.exists:
+                if entity_obj.to_dict()['password'] == sha256(content['password'].encode('utf-8')).hexdigest():
+                    doc_ref = db.collection('oregon_trail').document(content['username'])
+                    doc_dict = doc_ref.get().to_dict()
+                    for j in range(1, 11):
+                        if 'q' + str(j) in doc_dict:
+                            if doc_dict['q' + str(j)] == -1:
+                                return jsonify({"message": "Logged in", "question": 'Ending'}), 200
+                            elif doc_dict['q' + str(j)] == 0:
+                                return jsonify({"message": "Logged in", "question": 'q' + j}), 200
+                            
+                            if j == 10:
+                                return jsonify({"message": "Logged in", "question": 'Ending'}), 200
+                    # Login
+                # Not login
+                return jsonify({"error": "The username or password is incorrect"}), 400
+            else:
+                return jsonify({"error": "The username or password is incorrect"}), 400
+        else:
+            return jsonify({"error": "Missing one or more properties"}), 400
     if (
         'username' in content
         and 'bio' in content
