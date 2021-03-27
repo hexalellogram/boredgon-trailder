@@ -90,7 +90,6 @@ monogatari.script ({
 	// The game starts here.
 	'Start': [
 		'show scene #f7f6f6 with fadeIn',
-		'show notification Welcome',
 		{ 'Input': {
 			'Text': 'Are you a new or returning user?',
 			'Type': 'radio',
