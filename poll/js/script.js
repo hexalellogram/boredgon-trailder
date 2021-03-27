@@ -74,14 +74,14 @@ monogatari.assets ('images', {
 
 // Define the backgrounds for each scene.
 monogatari.assets ('scenes', {
-
+	'oregon': 'oregon.jpg'
 });
 
 
 // Define the Characters
 monogatari.characters ({
 	'y': {
-		name: 'Question',
+		name: 'Boredgon Trailder',
 		color: '#5bcaff'
 	}
 });
@@ -90,6 +90,7 @@ monogatari.script ({
 	// The game starts here.
 	'Start': [
 		'show scene #f7f6f6 with fadeIn',
+		'show background oregon',
 		{ 'Input': {
 			'Text': 'Are you a new or returning user?',
 			'Type': 'radio',
