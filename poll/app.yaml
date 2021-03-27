@@ -19,7 +19,7 @@ handlers:
 - url: /poll/match.html
   static_files: match.html
   upload: match.html
-- url: /image
+- url: /poll/image
   static_dir: image
 - url: /assets
   static_dir: assets
