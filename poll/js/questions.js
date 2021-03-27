@@ -1,4 +1,4 @@
-const DYSENTERY_THRESHOLD = 0.1; // should be between 0 and 1
+const DYSENTERY_THRESHOLD = -1; // should be between 0 and 1
 
 monogatari.script ({
     'Question1': [
